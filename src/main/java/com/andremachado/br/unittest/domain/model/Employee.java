@@ -3,13 +3,12 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "TB_EMPLOYEE")
 public class Employee {
@@ -26,4 +25,8 @@ public class Employee {
 
     @Column(nullable = false)
     private BigDecimal salary;
+
+    public void adjustSalary(BigDecimal readjustment) {
+        this.salary = this.salary.add(readjustment).setScale(2, RoundingMode.HALF_UP);
+    }
 }
